@@ -19,6 +19,7 @@ namespace Web1
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+            .UseKestrel(op => { op.ListenAnyIP(5000); })
+            .UseStartup<Startup>();
     }
 }
