@@ -12,7 +12,7 @@ namespace Web1.Controllers
     {
         public IActionResult Index()
         {
-            return Content($"Core from docker ,{DateTime.Now},varsion 2,hello，You Are Ok?");
+            return Content($"Core from docker ,{DateTime.Now},varsion 2,hello，You Are Ok?，你是哪一个容器呢");
         }
 
         public IActionResult About()
