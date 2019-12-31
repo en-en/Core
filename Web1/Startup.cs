@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Web1.Consul;
 
 namespace Web1
 {
@@ -36,7 +37,7 @@ namespace Web1
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,IApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -58,6 +59,16 @@ namespace Web1
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            Consul.ServiceEntity serviceEntity = new Consul.ServiceEntity
+            {
+                IP = Configuration["Service:IP"],
+                Port = Convert.ToInt32(Configuration["Service:Port"]),
+                ServiceName = Configuration["Service:Name"],
+                ConsulIP = Configuration["Consul:IP"],
+                ConsulPort = Convert.ToInt32(Configuration["Consul:Port"])
+            };
+            app.RegisterConsul(lifetime, serviceEntity);
         }
     }
 }
